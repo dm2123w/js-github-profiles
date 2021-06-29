@@ -65,3 +65,48 @@ body {
     color: #eee;
     margin-left: 2rem;
 }
+
+.user-info h2 {
+    margin-top: 0;
+}
+
+.user-info ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    max-width: 400px;
+}
+
+.user-info li {
+    display: flex;
+    align-items: center;
+}
+
+.user-info li strong {
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+
+.repo {
+    text-decoration: none;
+    color: #fff;
+    background-color: #212a72;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+@media(max-width: 500px) {
+    .card {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-form {
+        max-width: 400px;
+    }
+}
