@@ -18,7 +18,7 @@ async function getUser(username) {
 
 async function getRepos(username) {
     try {
-        const { data } = await axios(APIURL + username + "/repos");
+        const { data } = await axios(APIURL + username + "/repos?sort=created");
         addReposToCard(data);
     } catch (err) {
         createErrorCard("Problem fetching repos");
@@ -26,6 +26,7 @@ async function getRepos(username) {
 }
 
 function createUserCard(user) {
+
     const cardHTML = `
     <div class="card">
     <div>
@@ -50,7 +51,35 @@ function createUserCard(user) {
     </div>
     `;
 
+    const cardHTMLWithoutInfo = `
+    <div class="card">
+    <div>
+        <img
+            src="${user.avatar_url}"
+            alt="${user.name}"
+            class="avatar"
+        />
+    </div>
+    <div class="user-info">
+        <h2>${user.name}</h2>
+        <p>No information about this user</p>
+
+        <ul>
+            <li>${user.followers} <strong>Followers</strong></li>
+            <li>${user.following} <strong>Following</strong></li>
+            <li>${user.public_repos} <strong>Repos</strong></li>
+        </ul>
+
+        <div id="repos"></div>
+        </div>
+    </div>
+    `;
+
+    if (user.bio == null) {
+        main.innerHTML = cardHTMLWithoutInfo;
+    } else {
     main.innerHTML = cardHTML;
+    }
 }
 
 function createErrorCard(message) {
@@ -64,8 +93,14 @@ function createErrorCard(message) {
 
 function addReposToCard(repos) {
     const reposEl = document.getElementById("repos");
-    repos.forEach(repo => {
-        const repoLink = document.createElement('a');
+    repos.slice(0, 10).forEach((repo) => {
+        const repoEl = document.createElement("a");
+        repoEl.classList.add("repo");
+        repoEl.href = repo.html_url;
+        repoEl.target = "_blank";
+        repoEl.innerText = repo.name;
+
+        reposEl.appendChild(repoEl);
     });
 }
 
